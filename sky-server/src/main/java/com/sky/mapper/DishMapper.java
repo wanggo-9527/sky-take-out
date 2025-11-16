@@ -2,9 +2,11 @@ package com.sky.mapper;
 
 import com.sky.anno.AutoFill;
 import com.sky.dto.DishDTO;
+import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
 import com.sky.enumeration.OperationType;
+import com.sky.vo.DishVO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -29,4 +31,22 @@ public interface DishMapper {
     void save(Dish dish);
 
     void insertDishFlavor(List<DishFlavor> flavors);
+
+
+
+    Long pageQueryTotal(DishPageQueryDTO dishPageQueryDTO);
+
+    List<DishVO> pageQueryRecords(DishPageQueryDTO dishPageQueryDTO);
+
+    Dish getById(Long id);
+
+    void delete(Long id);
+
+    void deleteDishFlavor(Long id);
+
+    Integer getSetmealIdByDishId(Long id);
+
+    List<DishFlavor> getDishFlavorById(Long id);
+    @AutoFill(value = OperationType.UPDATE)
+    void update(Dish dish);
 }

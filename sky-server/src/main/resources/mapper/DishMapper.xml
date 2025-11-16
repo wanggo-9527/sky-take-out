@@ -8,4 +8,54 @@
             (#{item.dishId},#{item.name},#{item.value})
         </foreach>
     </insert>
+    <update id="update">
+        update dish set name = #{name}, category_id = #{categoryId}, price = #{price}, image = #{image}, description = #{description}, status = #{status}, update_time = #{updateTime}, update_user = #{updateUser} where id = #{id}
+    </update>
+    <delete id="delete">
+        delete from dish where id=#{id}
+    </delete>
+    <delete id="deleteDishFlavor">
+        delete from dish_flavor where dish_id=#{id}
+    </delete>
+    <select id="pageQueryRecords" resultType="com.sky.vo.DishVO">
+        select d.id, d.name,c.name as categoryName, d.category_id, d.price, d.image, d.description,d.status, d.update_time, d.create_time, d.update_user, d.create_user
+        from dish d left join category c on d.category_id = c.id
+        <where>
+            <if test="name != null and name != ''">
+                AND name like concat('%', #{name}, '%')
+            </if>
+            <if test="categoryId != null">
+                AND category_id = #{categoryId}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
+        limit #{page},#{pageSize}
+    </select>
+    <select id="pageQueryTotal" resultType="java.lang.Long">
+        select count(*)
+        from dish
+        <where>
+            <if test="name != null and name != ''">
+                AND name like concat('%', #{name}, '%')
+            </if>
+            <if test="categoryId != null">
+                AND category_id = #{categoryId}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
+
+    </select>
+    <select id="getById" resultType="com.sky.entity.Dish">
+        select * from dish where id = #{id}
+    </select>
+    <select id="getSetmealIdByDishId" resultType="java.lang.Integer">
+        select count(id) from setmeal_dish where dish_id = #{id}
+    </select>
+    <select id="getDishFlavorById" resultType="com.sky.entity.DishFlavor">
+        select * from dish_flavor where dish_id = #{id}
+    </select>
 </mapper>

@@ -37,5 +37,10 @@ public class GlobalExceptionHandler {
             return Result.error(MessageConstant.UNKNOWN_ERROR);
         }
     }
+    @ExceptionHandler
+    public Result exceptionHandler(RuntimeException ex){
+        log.error("异常信息：{}", ex.getMessage());
+        return Result.error(ex.getMessage());
+    }
 
 }
