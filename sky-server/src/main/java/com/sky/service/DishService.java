@@ -18,11 +18,10 @@ public interface DishService {
     DishVO getById(Long id);
 
     void update(DishDTO dishDTO);
-
     /**
-     * 根据条件查询菜品列表，并携带口味数据
-     * @param dish 查询条件
-     * @return 菜品列表
+     * 条件查询菜品和口味
+     * @param dish
+     * @return
      */
-    List<DishVO> listWithFlavor(Dish dish);
+   // List<DishVO> listWithFlavor(Dish dish);
 }

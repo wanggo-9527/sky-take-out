@@ -12,9 +12,9 @@ public class JwtProperties {
     /**
      * 管理端员工生成jwt令牌相关配置
      */
-    private String adminSecretKey;
-    private long adminTtl;
-    private String adminTokenName;
+    private String adminSecretKey;// jwt令牌密钥
+    private long adminTtl;// jwt令牌有效期
+    private String adminTokenName;// jwt令牌在响应头中的名称
 
     /**
      * 用户端微信用户生成jwt令牌相关配置
