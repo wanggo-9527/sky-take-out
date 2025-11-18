@@ -11,4 +11,11 @@ sky:
     access-key-id: LTAI5tAeHQWTukHHuCtKZ9fT
     access-key-secret: 1P7hNVbuA4k1cVLKCA8S4ljA6YDyCa
     bucket-name: wzq-sky-take-out
+  redis:
+      host: localhost
+      port: 6379
+      password:
+      database: 0
+
+
 
