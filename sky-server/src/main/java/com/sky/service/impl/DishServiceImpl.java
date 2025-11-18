@@ -5,6 +5,7 @@ import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
+import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
 import com.sky.result.PageResult;
 import com.sky.service.DishService;
@@ -23,6 +24,8 @@ import java.util.List;
 public class DishServiceImpl implements DishService {
     @Autowired
     private DishMapper dishMapper;
+    @Autowired
+    private DishFlavorMapper dishFlavorMapper;
 
     //新增菜品
     @Override
@@ -105,7 +108,6 @@ public class DishServiceImpl implements DishService {
      * @param dish
      * @return
      */
-/*
     public List<DishVO> listWithFlavor(Dish dish) {
         List<Dish> dishList = dishMapper.list(dish);
 
@@ -124,6 +126,5 @@ public class DishServiceImpl implements DishService {
 
         return dishVOList;
     }
-*/
 
 }
