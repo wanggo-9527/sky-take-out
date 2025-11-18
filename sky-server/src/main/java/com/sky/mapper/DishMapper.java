@@ -49,4 +49,11 @@ public interface DishMapper {
     List<DishFlavor> getDishFlavorById(Long id);
     @AutoFill(value = OperationType.UPDATE)
     void update(Dish dish);
+
+    /**
+     * 条件查询菜品列表
+     * @param dish 查询条件
+     * @return 菜品集合
+     */
+    List<Dish> list(Dish dish);
 }
