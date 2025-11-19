@@ -10,4 +10,6 @@ import java.util.List;
 public interface DishFlavorMapper {
     @Select("select * from dish_flavor where dish_id = #{dishId}")
     List<DishFlavor> getByDishId(Long id);
+    @Select("select value from dish_flavor where dish_id = #{dishId}")
+    List<String> getNamesByDishId(Long dishId);
 }

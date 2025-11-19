@@ -17,4 +17,34 @@
             </if>
         </where>
     </select>
+    <select id="pageQuery" resultType="com.sky.vo.SetmealVO">
+        select s.id,s.name,s.price,s.status,s.category_id,c.name as categoryName,s.image,s.update_time,s.description
+        from setmeal s left join category c on s.category_id = c.id
+        <where>
+            <if test="name != null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+        limit #{page},#{pageSize}
+    </select>
+    <select id="pageQueryTotal" resultType="java.lang.Long">
+        select count(id) from setmeal
+        <where>
+            <if test="name != null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
 </mapper>

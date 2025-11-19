@@ -39,24 +39,33 @@ public class SetmealServiceImpl implements SetmealService {
     @Autowired
     private DishMapper dishMapper;
 
+    @Override
+    public PageResult pageQuery(SetmealPageQueryDTO setmealPageQueryDTO) {
+        setmealPageQueryDTO.setPage((setmealPageQueryDTO.getPage()-1)*setmealPageQueryDTO.getPageSize());
+        Long total=setmealMapper.pageQueryTotal(setmealPageQueryDTO);
+        List<SetmealVO> list = setmealMapper.pageQuery(setmealPageQueryDTO);
+        return new PageResult(total,list);
+    }
+
+
+
     /**
      * 条件查询
      * @param setmeal
      * @return
      */
-    //TODO
-/*    public List<Setmeal> list(Setmeal setmeal) {
+
+    public List<Setmeal> list(Setmeal setmeal) {
         List<Setmeal> list = setmealMapper.list(setmeal);
         return list;
-    }*/
+    }
 
     /**
      * 根据id查询菜品选项
      * @param id
      * @return
      */
-    //TODO
-/*    public List<DishItemVO> getDishItemById(Long id) {
+    public List<DishItemVO> getDishItemById(Long id) {
         return setmealMapper.getDishItemBySetmealId(id);
-    }*/
+    }
 }

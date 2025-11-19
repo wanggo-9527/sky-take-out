@@ -59,7 +59,7 @@ public class Orders implements Serializable {
 
     //支付方式 1微信，2支付宝
     private Integer payMethod;
-
+    //TODO
     //支付状态 0未支付 1已支付 2退款
     private Integer payStatus;
 
@@ -80,7 +80,7 @@ public class Orders implements Serializable {
 
     //收货人
     private String consignee;
-
+    //TODO
     //订单取消原因
     private String cancelReason;
 

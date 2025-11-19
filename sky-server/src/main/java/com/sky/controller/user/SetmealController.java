@@ -8,6 +8,7 @@ import com.sky.vo.DishItemVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +28,10 @@ public class SetmealController {
      * @param categoryId
      * @return
      */
-    //TODO
-/*    @GetMapping("/list")
+
+    @GetMapping("/list")
     @ApiOperation("根据分类id查询套餐")
+    @Cacheable(cacheNames = "setmeal", key ="#categoryId")
     public Result<List<Setmeal>> list(Long categoryId) {
         Setmeal setmeal = new Setmeal();
         setmeal.setCategoryId(categoryId);
@@ -37,7 +39,7 @@ public class SetmealController {
 
         List<Setmeal> list = setmealService.list(setmeal);
         return Result.success(list);
-    }*/
+    }
 
     /**
      * 根据套餐id查询包含的菜品列表
@@ -45,11 +47,12 @@ public class SetmealController {
      * @param id
      * @return
      */
-    // TODO
-/*    @GetMapping("/dish/{id}")
+
+    @GetMapping("/dish/{id}")
     @ApiOperation("根据套餐id查询包含的菜品列表")
+    @Cacheable(cacheNames = "setmealDiah", key = "#id")
     public Result<List<DishItemVO>> dishList(@PathVariable("id") Long id) {
         List<DishItemVO> list = setmealService.getDishItemById(id);
         return Result.success(list);
-    }*/
+    }
 }
