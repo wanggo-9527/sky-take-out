@@ -52,3 +52,7 @@ sky:
   wechat:
     appid: ${sky.wechat.appid}
     secret: ${sky.wechat.secret}
+  shop:
+    address: 天津市东丽区中国民航大学
+  baidu:
+    ak: daY03NJ4x0GgVC4qmjwIhQtMzFeGy8TT

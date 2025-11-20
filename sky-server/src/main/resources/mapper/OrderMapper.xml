@@ -13,4 +13,100 @@
             (#{orderDetail.name},#{orderDetail.dishId},#{orderDetail.setmealId},#{orderDetail.dishFlavor},#{orderDetail.number},#{orderDetail.amount},#{orderDetail.image},#{orderDetail.orderId})
         </foreach>
     </insert>
+    <update id="update" parameterType="com.sky.entity.Orders">
+        update orders
+        <set>
+            <if test="cancelReason != null and cancelReason!='' ">
+                cancel_reason=#{cancelReason},
+            </if>
+            <if test="rejectionReason != null and rejectionReason!='' ">
+                rejection_reason=#{rejectionReason},
+            </if>
+            <if test="cancelTime != null">
+                cancel_time=#{cancelTime},
+            </if>
+            <if test="payStatus != null">
+                pay_status=#{payStatus},
+            </if>
+            <if test="payMethod != null">
+                pay_method=#{payMethod},
+            </if>
+            <if test="checkoutTime != null">
+                checkout_time=#{checkoutTime},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="deliveryTime != null">
+                delivery_time = #{deliveryTime}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <select id="historyOrdersCount" resultType="java.lang.Long">
+        select count(1) from orders
+        where user_id = #{userId}
+        <if test="status != null ">
+            and status = #{status}
+        </if>
+    </select>
+    <select id="historyOrders" resultType="com.sky.entity.Orders">
+        select * from orders
+        where user_id = #{userId}
+        <if test="status != null ">
+            and status = #{status}
+        </if>
+        order by order_time desc
+        limit #{page},#{pageSize}
+    </select>
+    <select id="getOrderDetail" resultType="com.sky.entity.OrderDetail">
+        select * from order_detail
+        where order_id = #{orderId}
+    </select>
+    <select id="allHistoryOrdersCount" resultType="java.lang.Long">
+        SELECT COUNT(1)
+        FROM orders
+        <where>
+            <if test="number != null and number != '' ">
+                AND number LIKE CONCAT('%', #{number}, '%')
+            </if>
+
+            <if test="phone != null and phone != '' ">
+                AND phone LIKE CONCAT('%', #{phone}, '%')
+            </if>
+
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+
+            <if test="beginTime != null and endTime != null">
+                AND order_time BETWEEN #{beginTime} AND #{endTime}
+            </if>
+        </where>
+    </select>
+    <select id="allHistoryOrders" resultType="com.sky.vo.OrderVO">
+        SELECT *
+        FROM orders
+        <where>
+            <if test="number != null and number != '' ">
+                AND number LIKE CONCAT('%', #{number}, '%')
+            </if>
+
+            <if test="phone != null and phone != '' ">
+                AND phone LIKE CONCAT('%', #{phone}, '%')
+            </if>
+
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+
+            <if test="beginTime != null and endTime != null">
+                AND order_time BETWEEN #{beginTime} AND #{endTime}
+            </if>
+        </where>
+
+        ORDER BY order_time DESC
+
+        LIMIT #{page}, #{pageSize}
+    </select>
 </mapper>
