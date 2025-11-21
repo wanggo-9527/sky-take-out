@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.ReportMapper">
+    <select id="turnoverStatistics" resultType="java.lang.Double">
+        SELECT SUM(amount) FROM orders
+        <where>
+            <if test="beginTime!=null">
+                and order_time &gt; #{beginTime}
+            </if>
+            <if test="endTime!=null">
+                and order_time &lt; #{endTime}
+            </if>
+            <if test="status!=null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+    <select id="userStatistics" resultType="java.lang.Integer">
+        SELECT COUNT(user_id) FROM orders
+        <where>
+            <if test="beginTime!=null">
+                and order_time &gt; #{beginTime}
+            </if>
+            <if test="endTime!=null">
+                and order_time &lt; #{endTime}
+            </if>
+            <if test="status!=null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+    <select id="orderStatistics" resultType="java.lang.Integer">
+        SELECT COUNT(id) FROM orders
+        <where>
+            <if test="beginTime!=null">
+                and order_time &gt; #{beginTime}
+            </if>
+            <if test="endTime!=null">
+                and order_time &lt; #{endTime}
+            </if>
+            <if test="status!=null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+    <select id="orderTotalStatistics" resultType="java.lang.Integer">
+        SELECT COUNT(id) FROM orders
+        <where>
+            <if test="beginTimeTotal!=null">
+                and order_time &gt; #{beginTimeTotal}
+            </if>
+            <if test="endTimeTotal!=null">
+                and order_time &lt; #{endTimeTotal}
+            </if>
+            <if test="status!=null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="orderStatisticsByRange"
+            resultType="com.sky.vo.DailyOrderStatistics">
+        SELECT
+        DATE(order_time) AS orderDate,
+        COUNT(id) AS totalCount,
+        SUM(CASE WHEN status = 5 THEN 1 ELSE 0 END) AS validCount
+        FROM orders
+        <where>
+            <if test="beginTime != null">
+                AND order_time &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null">
+                AND order_time &lt;= #{endTime}
+            </if>
+        </where>
+        GROUP BY DATE(order_time)
+        ORDER BY orderDate
+    </select>
+</mapper>

@@ -74,5 +74,12 @@ public class DishController {
         redisTemplate.delete(keys);
         return Result.success();
     }
+    //根据分类id查询菜品
+    @GetMapping("/list")
+    @ApiOperation("根据分类id查询菜品")
+    public Result<List<Dish>> list(Integer categoryId){
+        List<Dish> list = dishService.listByCategoryId(categoryId);
+        return Result.success(list);
+    }
 
 }

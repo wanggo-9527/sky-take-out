@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OrderMapper {
@@ -49,4 +50,20 @@ public interface OrderMapper {
     @Select("select * from orders where status = #{status} and order_time < #{orderTime}")
     List<Orders> getByStatusAndTimeout(@Param("status") Integer pendingPayment,
                                        @Param("orderTime") LocalDateTime orderTime);
+
+
+    /**
+     * 根据条件统计订单数量
+     * 可用条件：
+     *  - begin：起始时间（order_time >= begin）
+     *  - end：结束时间（order_time <= end）
+     *  - status：订单状态
+     */
+    Integer countByMap(Map<String, Object> map);
+
+    /**
+     * 根据条件统计订单金额总和
+     * 可用条件同上
+     */
+    Double sumByMap(Map<String, Object> map);
 }

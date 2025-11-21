@@ -93,13 +93,14 @@ public class DishServiceImpl implements DishService {
     public void update(DishDTO dishDTO) {
         Dish dish = new Dish();
         BeanUtils.copyProperties(dishDTO, dish);
-        dishMapper.update(dish);
-        dishMapper.deleteDishFlavor(dishDTO.getId());
+        dishMapper.update(dish);//更新菜品基本信息
+        dishMapper.deleteDishFlavor(dishDTO.getId());//删除菜品口味
         List<DishFlavor> dishFlavor = dishDTO.getFlavors();
         for(DishFlavor flavor: dishFlavor){
             flavor.setDishId(dish.getId());
         }
-        dishMapper.insertDishFlavor(dishDTO.getFlavors());
+        if(dishFlavor!=null && dishFlavor.size()>0)
+            dishMapper.insertDishFlavor(dishDTO.getFlavors());//插入菜品口味
     }
 
 
@@ -125,6 +126,11 @@ public class DishServiceImpl implements DishService {
         }
 
         return dishVOList;
+    }
+
+    @Override
+    public List<Dish> listByCategoryId(Integer categoryId) {
+        return dishMapper.listByCategoryId(categoryId);
     }
 
 }

@@ -109,4 +109,39 @@
 
         LIMIT #{page}, #{pageSize}
     </select>
+
+
+    <!-- 统计订单数量 -->
+    <select id="countByMap" parameterType="map" resultType="java.lang.Integer">
+        SELECT COUNT(id)
+        FROM orders
+        <where>
+            <if test="begin != null">
+                AND order_time <![CDATA[>=]]> #{begin}
+            </if>
+            <if test="end != null">
+                AND order_time <![CDATA[<=]]> #{end}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <!-- 统计订单金额总和（营业额） -->
+    <select id="sumByMap" parameterType="map" resultType="java.lang.Double">
+        SELECT SUM(amount)
+        FROM orders
+        <where>
+            <if test="begin != null">
+                AND order_time <![CDATA[>=]]> #{begin}
+            </if>
+            <if test="end != null">
+                AND order_time <![CDATA[<=]]> #{end}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
+    </select>
 </mapper>
